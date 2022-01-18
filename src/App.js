@@ -1,48 +1,36 @@
-import logo from './logo.svg';
 import './App.css';
 import ReactDOM from "react-dom";
 import React, { useState } from "react";
 
-const items = [
-  {
-    name: "Milk",
-    checked: false,
-  },
-  {
-    name: "Bread",
-    checked: false,
-  },
-  {
-    name: "Eggs",
-    checked: false,
-  },
-];
-
 function Item(props) {
-  const [isTicked, setTicked] = useState(false);
-
 
   const updateItem = () => {
-    items[props.index].checked = true;
-    setTicked(true);
+      const updatedItem = {
+          name: props.name,
+          checked: true
+      }
+      props.tickItemCallback(updatedItem, props.index)
   };
 
-  return (
-      <div className={isTicked? 'option ticked' : 'option'}>
+    return (
+      <div className={props.isChecked? 'option ticked' : 'option'}>
         <p>{props.name}</p>
         <button onClick={() => updateItem()} className='tickButton'>Tick!</button>
       </div>
   );
 }
 
-function ItemAdder() {
+function ItemAdder(props) {
 
-  const [inputValue, setInputValue] = useState("")
+  const [inputValue, setInputValue] = useState("");
   function handleClick() {
     if (inputValue.length > 1) {
-      items.push({name: inputValue, checked: false});
+        const item = {
+            name: inputValue,
+            checked: false
+        }
+        props.addItemCallback(item);
     }
-    console.log(items);
   }
 
 
@@ -56,22 +44,49 @@ return (
 }
 
 function App() {
+    const [items, setItems] = useState([
+        {
+            name: "Milk",
+            checked: false,
+        },
+        {
+            name: "Bread",
+            checked: false,
+        },
+        {
+            name: "Eggs",
+            checked: false,
+        },
+    ]);
 
-  return (
-<div>
-  <h1 id="mainHeading">My Shopping List</h1>
+    const addItem = (item) => {
+        setItems([...items, item]);
+    }
 
-  <ItemAdder/>
-  <div id='optionsSection' className='optionsFlex'>
-    {items.map((item, i) => (
-        <Item key={i} name={items[i].name} isChecked={items[i].checked} index={i}/>
-    ))}
-  </div>
+    const tickItem = (item, itemIndex) => {
+        let updatedItems = [];
+        for (let i = 0; i < items.length; i++) {
+            if (i == itemIndex) {
+                updatedItems.push(item)
+            }
+            else {
+                updatedItems.push(items[i])
+            }
+        }
+        setItems(updatedItems);
+    }
 
-
-</div>);}
-
-ReactDOM.render(<App />, document.getElementById("root"));
+      return (
+        <div>
+          <h1 id="mainHeading">My Shopping List</h1>
+          <ItemAdder addItemCallback={addItem}/>
+            <div id='optionsSection' className='optionsFlex'>
+                {items.map((item, i) => (
+                    <Item key={i} tickItemCallback={tickItem} name={items[i].name} isChecked={items[i].checked} index={i}/>
+                ))}
+            </div>
+        </div>);
+  }
 
 export default App;
 
