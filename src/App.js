@@ -23,7 +23,6 @@ function ItemAdder(props) {
     }
   }
 
-
 return (
       <div id="addItemBox" className="justifyWithSpaceBetween">
         <label htmlFor="addItem">What would you like to add?</label>
@@ -31,6 +30,15 @@ return (
         <button onClick={() => handleClick()} className="addButton"> Add me!</button>
       </div>
   );
+}
+
+function ShoppingList(props) {
+    return (
+        <div id='optionsSection' className='optionsFlex'>
+            {props.items.map((item, i) => (
+                <Item key={i} tickItemCallback={props.tickItemCallback} name={props.items[i].name} isChecked={props.items[i].checked} index={i}/>
+            ))}
+        </div>);
 }
 
 function App() {
@@ -62,12 +70,8 @@ function App() {
       return (
         <div>
           <h1 id="mainHeading">My Shopping List</h1>
-          <ItemAdder addItemCallback={addItem}/>
-            <div id='optionsSection' className='optionsFlex'>
-                {items.map((item, i) => (
-                    <Item key={i} tickItemCallback={tickItem} name={items[i].name} isChecked={items[i].checked} index={i}/>
-                ))}
-            </div>
+          <ItemAdder addItemCallback={addItem} />
+          <ShoppingList items={items} tickItemCallback={tickItem}/>
         </div>);
   }
 
