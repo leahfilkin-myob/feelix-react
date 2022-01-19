@@ -1,21 +1,12 @@
 import './App.css';
-import ReactDOM from "react-dom";
 import React, { useState } from "react";
 
 function Item(props) {
 
-  const updateItem = () => {
-      const updatedItem = {
-          name: props.name,
-          checked: true
-      }
-      props.tickItemCallback(updatedItem, props.index)
-  };
-
     return (
       <div className={props.isChecked? 'option ticked' : 'option'}>
         <p>{props.name}</p>
-        <button onClick={() => updateItem()} className='tickButton'>Tick!</button>
+        <button onClick={() => props.tickItemCallback(props.index)} className='tickButton'>Tick!</button>
       </div>
   );
 }
@@ -25,11 +16,10 @@ function ItemAdder(props) {
   const [inputValue, setInputValue] = useState("");
   function handleClick() {
     if (inputValue.length > 1) {
-        const item = {
+        props.addItemCallback({
             name: inputValue,
             checked: false
-        }
-        props.addItemCallback(item);
+        });
     }
   }
 
@@ -63,16 +53,9 @@ function App() {
         setItems([...items, item]);
     }
 
-    const tickItem = (item, itemIndex) => {
-        let updatedItems = [];
-        for (let i = 0; i < items.length; i++) {
-            if (i == itemIndex) {
-                updatedItems.push(item)
-            }
-            else {
-                updatedItems.push(items[i])
-            }
-        }
+    const tickItem = (itemIndex) => {
+        let updatedItems = [...items];
+        updatedItems[itemIndex].checked = true;
         setItems(updatedItems);
     }
 
