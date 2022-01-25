@@ -1,45 +1,7 @@
 import './App.css';
 import React, { useState } from "react";
-
-function Item(props) {
-
-    return (
-      <div className={props.isChecked? 'option ticked' : 'option'}>
-        <p>{props.name}</p>
-        <button onClick={() => props.tickItemCallback(props.index)} className='tickButton'>Tick!</button>
-      </div>
-  );
-}
-
-function ItemAdder(props) {
-
-  const [inputValue, setInputValue] = useState("");
-  function handleClick() {
-    if (inputValue.length > 1) {
-        props.addItemCallback({
-            name: inputValue,
-            checked: false
-        });
-    }
-  }
-
-return (
-      <div id="addItemBox" className="justifyWithSpaceBetween">
-        <label htmlFor="addItem">What would you like to add?</label>
-        <input type="text" onChange={(e) => setInputValue(e.target.value)} id="addItem" name="addItem"/>
-        <button onClick={() => handleClick()} className="addButton"> Add me!</button>
-      </div>
-  );
-}
-
-function ShoppingList(props) {
-    return (
-        <div id='optionsSection' className='optionsFlex'>
-            {props.items.map((item, i) => (
-                <Item key={i} tickItemCallback={props.tickItemCallback} name={props.items[i].name} isChecked={props.items[i].checked} index={i}/>
-            ))}
-        </div>);
-}
+import {ShoppingList} from "./components/ShoppingList"
+import {ItemAdder} from "./components/ItemAdder"
 
 function App() {
     const [items, setItems] = useState([
