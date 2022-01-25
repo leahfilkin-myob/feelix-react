@@ -22,6 +22,13 @@ test("item should call tickItem when button is clicked",
 test("if item is checked, should be crossed out",
     () => {
         render(<Item key={0} name={"Test Item"} isChecked={true} index={0}/>);
-        var outerDiv = screen.getByRole("itemStyler");
+        const outerDiv = screen.getByRole("itemStyler");
         expect(outerDiv).toHaveClass("ticked");
+    });
+
+test("if item is checked, button should be disabled",
+    () => {
+        render(<Item key={0} name={"Test Item"} isChecked={true} index={0}/>);
+        const button = screen.getByRole("button");
+        expect(button).toBeDisabled();
     });
