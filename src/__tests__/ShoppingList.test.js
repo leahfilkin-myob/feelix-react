@@ -1,6 +1,8 @@
 import {fireEvent, render} from "@testing-library/react";
 import {screen} from "@testing-library/react";
 import {ShoppingList} from "../components/ShoppingList";
+import {Item} from "../components/Item";
+import {ItemAdder} from "../components/ItemAdder";
 
 test("renders a heading",
     () => {
@@ -23,7 +25,6 @@ test("when given an item to add, should add an item to the list",
             },
         ];
         let {shoppingList} = render(<ShoppingList itemList={itemList} />);
-        //item to add
         let input = screen.getByLabelText('What would you like to add?');
         fireEvent.change(input, {
             target: {
@@ -36,7 +37,49 @@ test("when given an item to add, should add an item to the list",
 
         render(shoppingList)
 
-        //rerender to see change
-        //check its been added
         expect(screen.getByText("Chocolate")).toBeInTheDocument()
+    });
+
+test("when given an item to add, should not add item that is 0 chars long",
+    () => {
+        const addItemCallBack = jest.fn();
+        render(<ItemAdder addItemCallback={addItemCallBack}/>);
+        let input = screen.getByLabelText('What would you like to add?');
+        fireEvent.change(input, {
+            target: {
+                value: ''
+            }
+        });
+        fireEvent.click(
+            screen.getByText(/Add me!/)
+        );
+        expect(addItemCallBack).toHaveBeenCalledTimes(0);
+
+    });
+
+test("if item clicked on, should get crosssed out",
+    () => {
+        const itemList =[
+            {
+                name: "Milk",
+                checked: false,
+            },
+            {
+                name: "Bread",
+                checked: false,
+            },
+        ];
+        let {shoppingList} = render(<ShoppingList itemList={itemList} />);
+        const item0 = screen.getByRole("itemStyler0");
+        const item1 = screen.getByRole("itemStyler1");
+        const item0button = screen.getAllByText(/Tick!/)[0]
+
+        fireEvent.click(
+            item0button
+        );
+
+        render(shoppingList)
+
+        expect(item0).toHaveClass("ticked");
+        expect(item1).not.toHaveClass("ticked");
     });
