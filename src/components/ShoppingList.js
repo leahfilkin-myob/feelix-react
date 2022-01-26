@@ -1,11 +1,28 @@
-import {Item} from "./Item";
-import React from "react";
+import {ItemAdder} from "./ItemAdder";
+import {Items} from "./Items";
+import React, {useState} from "react";
 
-export function ShoppingList(props) {
+
+export function ShoppingList({itemList}) {
+
+    const [items, setItems] = useState(itemList);
+
+    const addItem = (item) => {
+        setItems([...items, item]);
+    }
+
+    const tickItem = (itemIndex) => {
+        let updatedItems = [...items];
+        updatedItems[itemIndex].checked = true;
+        setItems(updatedItems);
+    }
+
     return (
-        <div id='optionsSection' className='optionsFlex'>
-            {props.items.map((item, i) => (
-                <Item key={i} tickItemCallback={props.tickItemCallback} name={props.items[i].name} isChecked={props.items[i].checked} index={i}/>
-            ))}
-        </div>);
+        <div>
+            <h1 id="mainHeading">My Shopping List</h1>
+            <ItemAdder addItemCallback={addItem} />
+            <Items items={items} tickItemCallback={tickItem}/>
+
+        </div>
+    );
 }
