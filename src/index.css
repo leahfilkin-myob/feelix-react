@@ -16,10 +16,9 @@ body {
   background: linear-gradient(90deg, lightgrey, lightblue);
 }
 
-#mainHeading {
+.mainHeading {
   text-align: center;
-  margin-top: 35px;
-  margin-bottom: 35px;
+  margin: 35px;
 }
 
 #addItemBox {
@@ -31,9 +30,7 @@ body {
 
 
 .justifyWithSpaceBetween {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: space-between !important;
 }
 
 button {
@@ -58,22 +55,11 @@ button {
 }
 
 .option {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  background-color: white;
-  margin: 5px;
-  border-radius: 15px;
-  border: 2px solid black;
-  padding: 20px;
+  margin:0px;
 }
 
-.option:hover {
-  box-shadow: 0 5px 15px white;
-}
-
-.ticked > p {
+.ticked {
   text-decoration: line-through black;
 }
+
 

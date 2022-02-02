@@ -24,7 +24,7 @@ test("when given an item to add, should add an item to the list",
                 checked: false,
             },
         ];
-        let {shoppingList} = render(<ShoppingList itemList={itemList} />);
+        render(<ShoppingList itemList={itemList} />);
         let input = screen.getByLabelText('What would you like to add?');
         fireEvent.change(input, {
             target: {
@@ -35,11 +35,10 @@ test("when given an item to add, should add an item to the list",
             screen.getByText(/Add me!/)
         );
 
-        render(shoppingList)
-
         expect(screen.getByText("Chocolate")).toBeInTheDocument()
     });
 
+//move
 test("when given an item to add, should not add item that is 0 chars long",
     () => {
         const addItemCallBack = jest.fn();
@@ -70,8 +69,8 @@ test("if item clicked on, should get crosssed out",
             },
         ];
         let {shoppingList} = render(<ShoppingList itemList={itemList} />);
-        const item0 = screen.getByRole("itemStyler0");
-        const item1 = screen.getByRole("itemStyler1");
+        const item0 = screen.getByRole("ingredient0");
+        const item1 = screen.getByRole("ingredient1");
         const item0button = screen.getAllByText(/Tick!/)[0]
 
         fireEvent.click(

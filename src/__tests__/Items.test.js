@@ -3,7 +3,7 @@ import {Items} from "../components/Items";
 
 test("has all items in shopping list",
     () => {
-        const {shoppingList} = render(<Items items={[
+        render(<Items items={[
             {
                 name: "Milk",
                 checked: false,

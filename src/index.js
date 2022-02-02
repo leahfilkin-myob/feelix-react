@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import '@myob/myob-styles/dist/styles/myob-clean.css';
+
 
 ReactDOM.render(
   <React.StrictMode>
