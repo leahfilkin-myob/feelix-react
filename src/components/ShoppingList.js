@@ -27,7 +27,6 @@ export function ShoppingList({itemList}) {
 
     const tickItem = (index) => {
        let updatedItems = [...items];
-       updatedItems[index].checked = true;
        setItems(
          updatedItems.filter((value, itemIndex) => itemIndex !== index)
       );
@@ -46,7 +45,6 @@ export function ShoppingList({itemList}) {
       }
       setItems(newItem);
     }
-
 
     return (
           <Columns alignX="center">
