@@ -3,6 +3,8 @@ import {screen} from "@testing-library/react";
 import {ShoppingList} from "../components/ShoppingList";
 import {Item} from "../components/Item";
 import {ItemAdder} from "../components/ItemAdder";
+import {Items} from "../components/Items";
+import React from "react";
 
 test("renders a heading",
     () => {
@@ -82,3 +84,41 @@ test("if item clicked on, should get crosssed out",
         expect(item0).toHaveClass("ticked");
         expect(item1).not.toHaveClass("ticked");
     });
+
+//should make a test that if you delete the second row, the first and third are still there
+test("item is removed when selected, others stay",
+  () => {
+    const itemList = [
+      {
+        name: "Milk",
+        aisle: "opt1",
+        category: "opt6",
+      },
+      {
+        name: "Bread",
+        aisle: "opt2",
+        category: "opt2",
+      },
+      {
+        name: "Eggs",
+        aisle: "opt3",
+        category: "opt8",
+      },
+    ];
+
+    render(
+      <ShoppingList
+        itemList={itemList}
+      />
+    )
+    const button = document.querySelector('div > div:nth-child(2) > div:nth-child(2) > div:nth-child(4) > button')
+
+    fireEvent.click(
+      button
+    );
+    expect(screen.getByDisplayValue("Milk")).toBeInTheDocument();
+    expect(screen.getByDisplayValue("Eggs")).toBeInTheDocument();
+    expect(screen.getByDisplayValue("")).toBeInTheDocument();
+    expect(screen.queryByDisplayValue("Bread")).not.toBeInTheDocument();
+
+  });

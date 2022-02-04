@@ -1,7 +1,5 @@
 import React from "react";
 import {
-    Input,
-    Select,
     BulkAdd,
 } from "@myob/myob-widgets";
 import {Aisles} from "./Aisles";
@@ -21,26 +19,23 @@ export function Items(props) {
 
 
     const renderRow = (index, data, onChange) => (
-      <BulkAdd.Row key={index} index={index} rowData={{id: data.id}}>
+      <BulkAdd.Row role={"row "+index} key={index} index={index} rowData={{id: data.id}}>
           <BulkAdd.RowItem columnName={tableColumns[0].description} textWrap="wrap">
-            <Item
-              column={tableColumns[0]}
-              value={data[tableColumns[0].key] ? data[tableColumns[0].key] : ""}
-              onChange={onChange} />
+            <Item column={tableColumns[0]}
+                  value={data[tableColumns[0].key] ? data[tableColumns[0].key] : ""}
+                  onChange={onChange} />
           </BulkAdd.RowItem>
           <BulkAdd.RowItem columnName={tableColumns[1].description} textWrap="wrap">
-            <Categories
-              column={tableColumns[1]}
-              items={props.items}
-              value={props.items[props.column.key] ? props.items[props.column.key] : ""}
+            <Aisles
+              column={tableColumns[2]}
+              value={data[tableColumns[2].key] ? data[tableColumns[2].key] : ""}
               onChange={onChange}/>
           </BulkAdd.RowItem>
           <BulkAdd.RowItem columnName={tableColumns[2].description} textWrap="wrap">
-              <Aisles
-                column={tableColumns[2]}
-                items={props.items}
-                value={props.items[props.column.key] ? props.items[props.column.key] : ""}
-                onChange={onChange}/>
+            <Categories
+              column={tableColumns[1]}
+              value={data[tableColumns[1].key] ? data[tableColumns[1].key] : ""}
+              onChange={onChange}/>
           </BulkAdd.RowItem>
       </BulkAdd.Row>
     );
