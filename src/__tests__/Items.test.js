@@ -35,12 +35,6 @@ test("has all items in shopping list",
         expect(screen.getByDisplayValue("Eggs")).toBeInTheDocument();
     });
 
-/*
-test("calls removeRow function when a row is crossed off",
-  () => {
-    const row = screen.getByRole("button")
-    console.log(row)
-  })*/
 
 test("tick item call back occurs when row removed",
   () => {
@@ -81,12 +75,6 @@ test("tick item call back occurs when row removed",
 
   });
 
-/*
-test("last row has different opacity than the others",
-  () => {
-      ?????
-
-  });*/
 
 test("clicking on selectors in row calls change row function",
   () => {
@@ -128,7 +116,7 @@ test("clicking on selectors in row calls change row function",
 
   });
 
-test("adding an item makes a new row in the table",
+test("adding an item calls addRow function",
   () => {
     const itemList = [
       {
@@ -164,10 +152,5 @@ test("adding an item makes a new row in the table",
       input,
       {target: {value: 'Chocolate'}})
 
-    expect(screen.getByDisplayValue("Milk")).toBeInTheDocument();
-    expect(screen.getByDisplayValue("Bread")).toBeInTheDocument();
-    expect(screen.getByDisplayValue("Eggs")).toBeInTheDocument();
-    expect(screen.getByDisplayValue("")).toBeInTheDocument();
-
-
+    expect(addItemCallback).toHaveBeenCalledTimes(1);
   });
