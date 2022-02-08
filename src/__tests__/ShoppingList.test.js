@@ -2,7 +2,6 @@ import {fireEvent, render} from "@testing-library/react";
 import {screen} from "@testing-library/react";
 import {ShoppingList} from "../components/ShoppingList";
 import React from "react";
-import {Items} from "../components/Items";
 
 test("renders a heading",
     () => {
@@ -16,8 +15,6 @@ test("renders a heading",
         expect(h1).toHaveTextContent("My Shopping List");
     });
 
-
-//should make a test that if you delete the second row, the first and third are still there
 test("item is removed when selected, others stay",
   () => {
     const itemList = [
@@ -43,10 +40,11 @@ test("item is removed when selected, others stay",
         itemList={itemList}
       />
     )
-    const button = document.querySelector('div > div:nth-child(2) > div:nth-child(2) > div:nth-child(4) > button')
+
+  const buttons = screen.getAllByRole('button')
 
     fireEvent.click(
-      button
+      buttons[1]
     );
     expect(screen.getByDisplayValue("Milk")).toBeInTheDocument();
     expect(screen.getByDisplayValue("Eggs")).toBeInTheDocument();
@@ -80,7 +78,6 @@ test("adding an item makes a new row in the table",
     expect(screen.getByDisplayValue("")).toBeInTheDocument();
   });
 
-/*
 test("changing items updates on screen",
   () => {
     const itemList = [
@@ -97,12 +94,11 @@ test("changing items updates on screen",
       />
     )
 
-    const toChange = document.querySelector('div > div:nth-child(1) > div:nth-child(2) > div')
-    const changeInput = toChange.getByRole('option', { name: /aisle 7/i })
+    const comboboxes = screen.getAllByRole('combobox')
 
     fireEvent.click(
-      changeInput
-    );
-    expect(itemList[0].aisle).toBe("opt7")
+      comboboxes[0], {target: {value: "opt7"}}
+    )
+    expect(comboboxes[0].value).toBe("opt7")
 
-  });*/
+  });

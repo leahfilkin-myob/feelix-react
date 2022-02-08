@@ -1,6 +1,6 @@
 import React from "react";
 import {
-    BulkAdd,
+  BulkAdd, Card,
 } from "@myob/myob-widgets";
 import {Aisles} from "./Aisles";
 import {Categories} from "./Categories";
@@ -12,8 +12,8 @@ export function Items(props) {
         { key: 'name', description: 'Item name' },
         { key: 'aisle', description: 'Aisle' },
         { key: 'category', description: 'Category' },
-        { key: 'more', description: 'More', hiddenTitle: true }
     ];
+
 
     const labels = tableColumns.reduce((arr, data) => [...arr, data.description], []);
 
@@ -53,7 +53,18 @@ export function Items(props) {
     };
 
     return(
-      <BulkAdd>
+      <Card>
+      <BulkAdd  responsiveWidths={[
+        {
+          'min-width': '750px',
+          config: [
+            { columnName: 'Item name', styles: { width: '32%' } },
+            { columnName: 'Aisle', styles: { width: '31%' } },
+            { columnName: 'Category', styles: { width: '31%' } }
+          ]
+        },
+      ]
+      }>
           <BulkAdd.Header>
               {tableColumns.map(column => (
                 <BulkAdd.HeaderItem
@@ -74,5 +85,6 @@ export function Items(props) {
             onAddRow={onAddRow}
           />
       </BulkAdd>
+      </Card>
     );
 }
