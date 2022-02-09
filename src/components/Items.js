@@ -54,17 +54,7 @@ export function Items(props) {
 
     return(
       <Card>
-      <BulkAdd  responsiveWidths={[
-        {
-          'min-width': '750px',
-          config: [
-            { columnName: 'Item name', styles: { width: '32%' } },
-            { columnName: 'Aisle', styles: { width: '31%' } },
-            { columnName: 'Category', styles: { width: '31%' } }
-          ]
-        },
-      ]
-      }>
+      <BulkAdd>
           <BulkAdd.Header>
               {tableColumns.map(column => (
                 <BulkAdd.HeaderItem

@@ -2,6 +2,7 @@
   "name": "feelix-react",
   "version": "0.1.0",
   "private": true,
+  "proxy": "https://dog-facts-api.herokuapp.com/",
   "dependencies": {
     "@myob/myob-styles": "^6.15.0",
     "@myob/myob-widgets": "^6.15.0",
