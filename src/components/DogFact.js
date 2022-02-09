@@ -20,10 +20,9 @@ export function DogFact(props) {
       })
   }
 
-
   return (
     <Card>
-      <h1> Your dog fact for this shopping trip!</h1>
+      <h2> Your dog fact for this shopping trip!</h2>
       <p id="test"> Dog fact incoming...</p>
     </Card>
   )
