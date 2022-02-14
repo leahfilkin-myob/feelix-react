@@ -59,8 +59,7 @@ export function ShoppingList({itemList}) {
           changeItemCallback={changeItem}
           items={items}
         />
-
-        <DogFact></DogFact>
+        <DogFact url={'/api/v1/resources/dogs?number=1'} />
 
       </Columns.Column>
     </Columns>

@@ -4,26 +4,27 @@ import {Card} from "@myob/myob-widgets";
 
 export function DogFact(props) {
 
-  window.onload = function getDogFact() {
-    const fetchPromise = fetch('/api/v1/resources/dogs?number=1');
-    const paragraph = document.getElementById("test");
-    fetchPromise.then(response => {
-      return response.json()
-    })
-      .then(factArray => {
-        let result = factArray.map(factData => factData.fact);
-        paragraph.innerHTML = result;
-        console.log(result)
-      })
-      .catch(error => {
-        console.log(error)
-      })
+  async function makeRequest() {
+    const fetchPromise = await fetch('/api/v1/resources/dogs?number=1');
+    const json =  await fetchPromise.json();
+    let fact =  await json.map(factData => factData.fact);
+    return fact;
+  }
+
+  function insertTextFromRequest(fact) {
+    const paragraph = document.getElementById("dogFact");
+    paragraph.innerHTML = fact;
+  }
+
+  window.onload =  async function displayDogFact() {
+    let fact =  await makeRequest();
+    insertTextFromRequest(fact)
   }
 
   return (
     <Card>
       <h2> Your dog fact for this shopping trip!</h2>
-      <p id="test"> Dog fact incoming...</p>
+      <p role="dogFactDisplay" id="dogFact"> Dog fact incoming...</p>
     </Card>
   )
 }
