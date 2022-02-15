@@ -11,30 +11,16 @@ test("if error with fetching dog fact, return error message",
   }
 )
 
-/*
 test("if all goes well, dog fact should be one of the ones supplied",
   async () => {
     render(
-      <DogFact url={'/api/v1/resources/dogs?number=1'}/>
+      <DogFact url={'/api/v1/resources/dogs?index=1'}/>
     );
 
-    let result;
-    const fetchPromise = fetch('/api/v1/resources/dogs/all');
-    fetchPromise.then(response => {
-      return response.json()
-    })
-      .then(factArray => {
-        result = factArray.map(factData => factData.fact);
-      })
-
-      const match = result.find( element => {
-    if (element.includes(screen.getByRole("dogFactDisplay").innerText)) {
-      return true;
-    }})
-
-    expect(match).toBeTruthy()
+    expect(await screen.findByText("Ancient Egyptians revered their dogs. When a pet dog would die, " +
+      "the owners shaved off their eyebrows, smeared mud in their hair, and mourned aloud for days.")).toBeInTheDocument();
   }
-)*/
+)
 
 test("mock api",
   async () => {

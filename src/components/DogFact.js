@@ -1,14 +1,18 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {Card} from "@myob/myob-widgets";
 
 
 export function DogFact(props) {
 
   async function makeRequest() {
-    const fetchPromise = await fetch('/api/v1/resources/dogs?number=1');
-    const json =  await fetchPromise.json();
-    let fact =  await json.map(factData => factData.fact);
-    return fact;
+    const json = await fetch(props.url)
+      .then(async promise => promise.json())
+      .then(async promiseJson => {
+        return await promiseJson.map(factData => factData.fact)
+      })
+      .catch( error => {
+      return "Oops! Something went wrong. We are unable to get a dog fact for you at this time." });;
+      return json;
   }
 
   function insertTextFromRequest(fact) {
@@ -16,10 +20,13 @@ export function DogFact(props) {
     paragraph.innerHTML = fact;
   }
 
-  window.onload =  async function displayDogFact() {
-    let fact =  await makeRequest();
-    insertTextFromRequest(fact)
-  }
+  useEffect(  () => {
+    async function displayDogFact() {
+      let fact =  await makeRequest();
+      insertTextFromRequest(fact);
+    }
+    displayDogFact();
+  }, []);
 
   return (
     <Card>
