@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {Card} from "@myob/myob-widgets";
+import makeRequest from "./DogFactUtil";
 
 
 export function DogFact(props) {
@@ -7,22 +8,17 @@ export function DogFact(props) {
   const [dogFact, setDogFact] =
     useState("Dog fact incoming...");
 
-  async function makeRequest() {
-    const json = await fetch(props.url)
-      .then(async promise => promise.json())
-      .then(async promiseJson => {
-        return await promiseJson.map(factData => factData.fact)
-      })
-      .catch( error => {
-      return "Oops! Something went wrong. We are unable to get a dog fact for you at this time." });;
-      return json;
+   async function getDogFactFromJson(json) {
+    return await json.map(factData => factData.fact)
+  }
+
+  async function displayDogFact() {
+    let json =  await makeRequest(props.url);
+    let fact = await getDogFactFromJson(json)
+    setDogFact(fact);
   }
 
   useEffect(  () => {
-    async function displayDogFact() {
-      let fact =  await makeRequest();
-      setDogFact(fact);
-    }
     displayDogFact();
   }, []);
 
