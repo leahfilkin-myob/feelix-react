@@ -14,8 +14,13 @@ export function DogFact(props) {
 
   async function displayDogFact() {
     let json =  await makeRequest(props.url);
-    let fact = await getDogFactFromJson(json)
-    setDogFact(fact);
+    if (json == "ERROR") {
+      setDogFact("Oops! Something went wrong. We are unable to get a dog fact for you at this time.")
+    }
+    else {
+      let fact = await getDogFactFromJson(json)
+      setDogFact(fact);
+    }
   }
 
   useEffect(  () => {
