@@ -1,8 +1,11 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {Card} from "@myob/myob-widgets";
 
 
 export function DogFact(props) {
+
+  const [dogFact, setDogFact] =
+    useState("Dog fact incoming...");
 
   async function makeRequest() {
     const json = await fetch(props.url)
@@ -15,15 +18,10 @@ export function DogFact(props) {
       return json;
   }
 
-  function insertTextFromRequest(fact) {
-    const paragraph = document.getElementById("dogFact");
-    paragraph.innerHTML = fact;
-  }
-
   useEffect(  () => {
     async function displayDogFact() {
       let fact =  await makeRequest();
-      insertTextFromRequest(fact);
+      setDogFact(fact);
     }
     displayDogFact();
   }, []);
@@ -31,7 +29,7 @@ export function DogFact(props) {
   return (
     <Card>
       <h2> Your dog fact for this shopping trip!</h2>
-      <p role="dogFactDisplay" id="dogFact"> Dog fact incoming...</p>
+      <p role="dogFactDisplay" id="dogFact"> {dogFact} </p>
     </Card>
   )
 }
