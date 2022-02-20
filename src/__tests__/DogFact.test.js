@@ -1,5 +1,8 @@
 import React from "react";
 import {DogFact} from "../components/DogFact";
+import {makeRequest} from "../components/DogFactUtil";
+import * as utils from "../components/DogFactUtil"
+
 import {render, screen} from "@testing-library/react";
 
 test("if error with fetching dog fact, return error message",
@@ -11,42 +14,18 @@ test("if error with fetching dog fact, return error message",
   }
 )
 
-test("if all goes well, dog fact should be one of the ones supplied",
+test("Displays dog fact if valid dog fact is returned",
   async () => {
+    const spy = jest.spyOn(utils, 'makeRequest').mockReturnValueOnce([{fact: "mocked dog fact"}]);
+
     render(
       <DogFact url={'/api/v1/resources/dogs?index=1'}/>
     );
+    expect(await screen.findByText("mocked dog fact")).toBeInTheDocument();
 
-    expect(await screen.findByText("Ancient Egyptians revered their dogs. When a pet dog would die, " +
-      "the owners shaved off their eyebrows, smeared mud in their hair, and mourned aloud for days.")).toBeInTheDocument();
+    spy.mockReset();
+    spy.mockRestore();
   }
 )
 
-test("mock api",
-  async () => {
-    global.fetch = jest.fn(() =>
-      Promise.resolve({
-        json: () => Promise.resolve({fact: "a random dog fact"}),
-      }));
-
-    render(<DogFact url={'/api/v1/resources/dogs?number=1'}/>)
-
-
-
-    expect(await screen.findByText("a random dog fact")).toBeInTheDocument()
-
-/*    const fact = {fact: "a random dog fact"}
-
-    const mockGetDogFact = jest.spyOn(global, fetch);
-    mockGetDogFact.mockResolvedValue(fact);
-
-    await mockGetDogFact();
-
-    expect(await mockGetDogFact()).toHaveValue("a random dog fact")
-
-    afterEach(() => {
-      mockGetDogFact.mockClear()
-    })*/
-
-  }
-)
+// mock {fact:

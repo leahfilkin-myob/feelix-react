@@ -1,14 +1,13 @@
 import React, {useState} from "react";
 
 
-function makeRequest(url) {
+export function makeRequest(url) {
   const json = fetch(url)
     .then(promise => promise.json())
     .catch(error => {
       return "ERROR"
     })
   ;
+  console.log(json)
   return json;
 }
-
-export default makeRequest;
