@@ -14,7 +14,7 @@ test("if error with fetching dog fact, return error message",
   }
 )
 
-test("Displays dog fact if valid dog fact is returned",
+test("displays dog fact if valid dog fact is returned",
   async () => {
     const spy = jest.spyOn(utils, 'makeRequest').mockReturnValueOnce([{fact: "mocked dog fact"}]);
 

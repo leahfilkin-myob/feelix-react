@@ -8,6 +8,5 @@ export function makeRequest(url) {
       return "ERROR"
     })
   ;
-  console.log(json)
   return json;
 }
